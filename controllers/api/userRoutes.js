@@ -1,16 +1,22 @@
 const router = require("express").Router();
 const { User } = require("../../models");
+const bcrypt = require("bcrypt");
 
-// --------------------------- POST Router -------------------------------- //
+// --------------------------- Signup -------------------------------- //
 router.post("/", async (req, res) => {
   try {
-    const userData = await User.create(req.body);
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const newUser = await User.create({
+      name: req.body.name,
+      email: req.body.email,
+      password: hashedPassword,
+    });
 
     req.session.save(() => {
-      req.session.user_id = userData.id;
+      req.session.user_id = newUser.id;
       req.session.logged_in = true;
-
-      res.status(200).json(userData);
+      //   res.redirect("/");
+      res.status(200).json(newUser);
     });
   } catch (err) {
     res.status(400).json(err);

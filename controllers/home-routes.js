@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
     const blogs = blogData.map((blog) => blog.get({ plain: true }));
 
     // pass serialized data and session flag into template
-    res.render("homepage", {
+    res.render("dashboard", {
       blogs,
       logged_in: req.session.logged_in,
     });
@@ -36,7 +36,10 @@ router.get("/blog/:id", async (req, res) => {
         },
       ],
     });
-
+    if (!blogData) {
+      res.status(404).json("No blog found with this ID!");
+      return;
+    }
     const blog = blogData.get({ plain: true });
 
     res.render("blog", {
