@@ -15,12 +15,24 @@ User.hasMany(Blog, {
 // > User will not have any foreign keys
 
 // Blog
+Blog.belongsTo(User, {
+  foreignKey: "user_id",
+});
 // > Blogs belong to one User
+Blog.hasMany(Comment, {
+  foreignKey: "blog_id",
+});
 // > Blogs can have many Comments
 // > Has foreign key that points to the User
 
 // Comment
 // > Comment belongs to one User
+Comment.belongsTo(User, {
+  foreignKey: "user_id",
+});
 // > Comment belongs to one Blog
 // > Has foreign key for the User
+Comment.belongsTo(Blog, {
+  foreignKey: "blog_id",
+});
 // > Has foreign key for the Blog
