@@ -10,3 +10,13 @@
 // route to update a blogpost **this is not the same as line 8 (// route for viewing a single blogpost and comments)
 
 //
+
+const router = require("express").Router();
+
+const apiRoutes = require("./api");
+const homeRoutes = require("./home-routes.js");
+
+router.use("/", homeRoutes);
+router.use("/api", apiRoutes);
+
+module.exports = router;
