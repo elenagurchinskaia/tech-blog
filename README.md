@@ -58,7 +58,7 @@ The Tech Blog is a web application that allows users to create and share their b
 
 ## Deployment
 
-[The Tech Blog](https://elenagurchinskaia.github.io/horizeon-customer-site/)
+[The Tech Blog](https://github.com/elenagurchinskaia/tech-blog)
 
 ![alt text](./public/images/tech-blog.png)
 
