@@ -1,10 +1,15 @@
 <section class="container">
   <h3 class="blog-name">{{blog.name}}</h3>
   <section class="flex-row justify-center">
-    {{#each blog.comment as |comment|}}{{/each}}
+    {{#each blog.comments as |comment|}}
+      <div class="comment">
+        <p>{{comment.text}}</p>
+        <p class="comment-date">{{comment.date_created}}</p>
+      </div>
+    {{/each}}
   </section>
-
-  {{!-- <div class="new-post-button">
-    <a href="/new-post" class="btn btn-primary">+ New Post</a> --}}
-  </div>
+  <div class="new-post-button">
+    <a href="/new-post" class="btn btn-primary">+ New Post</a>
 </section>
+
+<script src="/js/dashboard.js"></script>

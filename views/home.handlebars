@@ -1,0 +1,21 @@
+<body>
+  {{#each recentPosts}}
+    <div class="post">
+      <h2>{{title}}</h2>
+      <p>{{content}}</p>
+      <button class="add-comment-btn" data-post-id="{{id}}">Add Comment</button>
+      <div class="comment-section" data-post-id="{{id}}">
+        {{#each comments}}
+          <div class="comment">
+            <p>{{text}}</p>
+            <p>Comment by: {{user.name}}</p>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  {{/each}}
+  
+  <!-- JavaScript -->
+  <script src="/js/homepage.js"></script>
+</body>
+</html>

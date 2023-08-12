@@ -8,8 +8,7 @@ router.post("/", async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const newUser = await User.create({
-      name: req.body.name,
-      email: req.body.email,
+      name: req.body.username,
       password: hashedPassword,
     });
 
@@ -24,13 +23,15 @@ router.post("/", async (req, res) => {
 // --------------------------- Login -------------------------------- //
 router.post("/login", async (req, res) => {
   try {
-    const userData = await User.findOne({ where: { email: req.body.email } });
+    const userData = await User.findOne({
+      where: { email: req.body.username },
+    });
 
     console.log("Login route reached");
     console.log("userData:", userData);
 
     if (!userData) {
-      return res.status(400).json({ message: "Invalid email." });
+      return res.status(400).json({ message: "Invalid username." });
     }
 
     const validPassword = await bcrypt.compare(

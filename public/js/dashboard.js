@@ -1,10 +1,18 @@
+// Display user's existing blog posts.
+// Option to add a new blog post.
+// Clicking on existing posts allows updating or deleting posts.
+// Prompt user to enter a title and contents for the new post.
+// Clicking on create button saves the new post and updates the dashboard.
+// Users can update or delete their existing posts.
+// Dashboard updates after performing actions.
+// Clicking on logout option signs the user out.
+// Implement a mechanism that prompts users to log in again after being idle for a set time.
+
 const newFormHandler = async (event) => {
   event.preventDefault();
 
   const name = document.querySelector("#blog-name").value.trim();
-  // const needed_funding = document
-  //   .querySelector("#project-funding")
-  //   .value.trim();
+
   const description = document.querySelector("#blog-desc").value.trim();
 
   if (name && needed_funding && description) {
