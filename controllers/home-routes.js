@@ -70,15 +70,28 @@ router.get("/profile", withAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
+
 // --------------------------- Login -------------------------------- //
+
 router.get("/login", (req, res) => {
   // If the user is already logged in, redirect the request to another route
-  if (req.session.logged_in) {
+  if (req.session.loggedIn) {
     res.redirect("/profile");
     return;
   }
 
   res.render("login");
+});
+
+// --------------------------- Sign Up -------------------------------- //
+
+router.get("/signup", (req, res) => {
+  if (req.session.signedUp) {
+    res.redirect("/profile");
+    return;
+  }
+
+  res.render("signup");
 });
 
 module.exports = router;

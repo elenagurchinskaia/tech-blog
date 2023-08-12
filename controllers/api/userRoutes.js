@@ -1,25 +1,24 @@
 const router = require("express").Router();
+const session = require("express-session");
 const { User } = require("../../models");
 const bcrypt = require("bcrypt");
 
 // --------------------------- Signup -------------------------------- //
-router.post("/", async (req, res) => {
+router.post("/signup", async (req, res) => {
   try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const hashedPassword = await bcrypt.hash(req.body.password, 5);
     const newUser = await User.create({
       name: req.body.name,
       email: req.body.email,
       password: hashedPassword,
     });
 
-    req.session.save(() => {
-      req.session.user_id = newUser.id;
-      req.session.logged_in = true;
-      //   res.redirect("/");
-      res.status(200).json(newUser);
-    });
+    req.session.user_id = newUser.id;
+    req.session.logged_in = true;
+
+    res.status(201).json({ message: "User signed up and logged in" });
   } catch (err) {
-    res.status(400).json(err);
+    res.status(500).json({ message: "An error occurred" });
   }
 });
 // --------------------------- Login -------------------------------- //
@@ -28,29 +27,24 @@ router.post("/login", async (req, res) => {
     const userData = await User.findOne({ where: { email: req.body.email } });
 
     if (!userData) {
-      res
-        .status(400)
-        .json({ message: "Incorrect email or password, please try again" });
-      return;
+      return res.status(400).json({ message: "Invalid email." });
     }
 
-    const validPassword = await userData.checkPassword(req.body.password);
+    const validPassword = await bcrypt.compare(
+      req.body.password,
+      userData.password
+    );
 
     if (!validPassword) {
-      res
-        .status(400)
-        .json({ message: "Incorrect email or password, please try again" });
-      return;
+      return res.status(400).json({ message: "Invalid password" });
     }
 
-    req.session.save(() => {
-      req.session.user_id = userData.id;
-      req.session.logged_in = true;
+    req.session.user_id = userData.id;
+    req.session.logged_in = true;
 
-      res.json({ user: userData, message: "You are now logged in!" });
-    });
+    res.status(200).json({ message: "User logged in successfully" });
   } catch (err) {
-    res.status(400).json(err);
+    res.status(500).json({ message: "An error occurred" });
   }
 });
 // --------------------------- Logout -------------------------------- //
