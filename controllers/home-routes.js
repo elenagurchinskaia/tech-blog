@@ -5,6 +5,7 @@ const withAuth = require("../utils/auth");
 // --------------------------- GET All Router -------------------------------- //
 router.get("/", async (req, res) => {
   try {
+    console.log(req);
     const recentPosts = await Blog.findAll({
       include: [
         {
@@ -25,8 +26,7 @@ router.get("/", async (req, res) => {
     // serialize data so the template can read it
     // const blogs = blogData.map((blog) => blog.get({ plain: true }));
 
-    // pass serialized data and session flag into template
-    res.render("home", { recentPosts, logged_in: req.session.logged_in });
+    res.render("homepage", { recentPosts, logged_in: req.session.logged_in });
   } catch (err) {
     res.status(500).json(err);
   }
