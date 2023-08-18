@@ -4,7 +4,7 @@ const blogRoutes = require("./blogRoutes");
 const commentRoutes = require("./commentRoutes");
 const userRoutes = require("./userRoutes");
 
-router.use("/blog", blogRoutes);
+router.use("/blogs", blogRoutes);
 router.use("/comment", commentRoutes);
 router.use("/users", userRoutes);
 

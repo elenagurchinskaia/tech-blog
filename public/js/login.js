@@ -24,6 +24,7 @@ const loginFormHandler = async (event) => {
       if (response.ok) {
         // redirect to the dashboard page after signing in
         document.location.replace("/dashboard");
+        console.log("Routing to Dashboard!");
       } else {
         const responseData = await response.json();
         alert(responseData.message);
